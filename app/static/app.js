@@ -83,10 +83,12 @@ function renderAudit(events) {
   }));
 }
 
+const EVALUATION_LABELS = { baseline: "제목·요약만 검색", candidate: "그래프 필드 확장 검색" };
+
 function renderEvaluation(metrics) {
   $("#metrics").replaceChildren(...["baseline", "candidate"].map((name) => {
     const row = document.createElement("tr");
-    [name, metrics[name].recall_at_5.toFixed(2), metrics[name].mrr.toFixed(2)].forEach((value) => {
+    [EVALUATION_LABELS[name], metrics[name].recall_at_5.toFixed(2), metrics[name].mrr.toFixed(2)].forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent = value;
       row.append(cell);

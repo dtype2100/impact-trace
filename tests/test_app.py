@@ -405,3 +405,13 @@ def test_sample_chips_rank_their_intended_clause_first():
     for query, clause_id in expected.items():
         assert f'data-query="{query}"' in page
         assert service.analyze(query)["evidence"][0]["id"] == clause_id
+
+
+def test_evaluation_table_caption_disclaims_model_performance():
+    client = TestClient(create_app(FixtureService(DATA_DIR)))
+    page = client.get("/").text
+    script = client.get("/static/app.js").text
+    assert "고정 질문셋 기준의 결정론적 검색 품질이며 모델 성능이 아닙니다" in page
+    assert "제목·요약만 검색" in script
+    assert "그래프 필드 확장 검색" in script
+
