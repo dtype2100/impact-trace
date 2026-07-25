@@ -391,3 +391,17 @@ def test_page_explains_each_mode_and_the_index_step():
     assert 'data-misconfigured="환경변수 여섯 개가 모두 필요합니다"' in page
     assert "① 규제 데이터 색인" in page
     assert "조항을 검색 색인에 올립니다." in page
+
+
+def test_sample_chips_rank_their_intended_clause_first():
+    page = TestClient(create_app(FixtureService(DATA_DIR))).get("/").text
+    service = FixtureService(DATA_DIR)
+    expected = {
+        "ICT 사고 관리 절차와 증빙은 무엇인가?": "DORA-ART-17",
+        "ICT 제3자 공급자 위험은 어떻게 관리하는가?": "DORA-ART-28",
+        "업무연속성과 백업 복구 시험 요구사항은 무엇인가?": "DORA-ART-11",
+    }
+    assert 'id="sample-button"' not in page
+    for query, clause_id in expected.items():
+        assert f'data-query="{query}"' in page
+        assert service.analyze(query)["evidence"][0]["id"] == clause_id

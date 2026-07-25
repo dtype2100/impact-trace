@@ -47,7 +47,11 @@
         <p class="step">01 · 질문</p>
         <h2 id="analysis-heading">규정 영향 분석</h2>
         <p class="muted">동기화 후 질문을 제출하면 근거와 검토 초안을 만듭니다.</p>
-        <button id="sample-button" class="secondary" type="button">사고 관리 예시 사용</button>
+        <div class="sample-chips">
+          <button class="sample-chip" type="button" data-query="ICT 사고 관리 절차와 증빙은 무엇인가?">사고 관리</button>
+          <button class="sample-chip" type="button" data-query="ICT 제3자 공급자 위험은 어떻게 관리하는가?">제3자 리스크</button>
+          <button class="sample-chip" type="button" data-query="업무연속성과 백업 복구 시험 요구사항은 무엇인가?">업무연속성</button>
+        </div>
         <form id="analysis-form">
           <label for="query-input">규정 질문</label>
           <textarea id="query-input" name="query" minlength="3" required placeholder="ICT 사고 관리 절차와 증빙은 무엇인가?"></textarea>

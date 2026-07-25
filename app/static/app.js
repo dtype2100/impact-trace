@@ -92,7 +92,13 @@ async function loadHealth() {
   note.textContent = note.dataset[result.mode] || "";
 }
 
-$("#sample-button").addEventListener("click", () => { $("#query-input").value = "ICT 사고 관리 절차와 증빙은 무엇인가?"; });
+document.querySelectorAll(".sample-chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const input = $("#query-input");
+    input.value = chip.dataset.query;
+    input.focus();
+  });
+});
 
 controls.sync.addEventListener("click", async () => {
   controls.sync.disabled = true;
