@@ -69,6 +69,9 @@ th { color: var(--slate); font-size: .8rem; }
 .sample-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
 .sample-chip { background: var(--surface); border: 1px solid var(--rule); border-radius: 1rem; color: var(--ink); font-size: .82rem; font-weight: 600; padding: .35rem .8rem; }
 .sample-chip:hover:not(:disabled) { background: #EFF6FF; border-color: var(--action); }
+.trace-step-label { color: #0D9488; display: block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.trace-step-value { display: block; margin-top: .2rem; }
+.evidence-obligation { color: var(--slate); font-size: .82rem; margin: .2rem 0 0; }
 
 @media (max-width: 760px) {
   .workbench { padding: 1rem; }

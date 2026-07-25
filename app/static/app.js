@@ -29,24 +29,40 @@ function renderTrace(result) {
   const path = (result.graph_paths || [])[0] || [];
   $("#trace-path").replaceChildren(...path.map((item) => {
     const node = document.createElement("li");
-    node.textContent = item;
+    const separator = item.indexOf(":");
+    const label = document.createElement("span");
+    const value = document.createElement("span");
+    label.className = "trace-step-label";
+    value.className = "trace-step-value";
+    label.textContent = separator === -1 ? "" : item.slice(0, separator);
+    value.textContent = separator === -1 ? item : item.slice(separator + 1);
+    node.append(label, value);
     return node;
   }));
   const evidence = result.evidence || [];
-  $("#sources").replaceChildren(...(evidence.length ? evidence : [{ title: "표시할 공식 출처가 없습니다." }]).map((item) => {
-    const node = document.createElement("li");
-    if (item.source_url && safeUrl(item.source_url)) {
-      const link = document.createElement("a");
-      link.href = item.source_url;
-      link.rel = "noreferrer";
-      link.target = "_blank";
-      link.textContent = `${item.id}: ${item.title}`;
-      node.append(link);
-    } else {
-      node.textContent = item.id ? `${item.id}: ${item.title}` : item.title;
-    }
-    return node;
-  }));
+  $("#sources").replaceChildren(...(evidence.length ? evidence : [{ title: "표시할 공식 출처가 없습니다." }]).map(renderSource));
+}
+
+function renderSource(item) {
+  const node = document.createElement("li");
+  const heading = `${item.article || item.id || ""} · ${item.title}`.replace(/^ · /, "");
+  if (item.source_url && safeUrl(item.source_url)) {
+    const link = document.createElement("a");
+    link.href = item.source_url;
+    link.rel = "noreferrer";
+    link.target = "_blank";
+    link.textContent = heading;
+    node.append(link);
+  } else {
+    node.append(document.createTextNode(heading));
+  }
+  if (item.obligation) {
+    const obligation = document.createElement("p");
+    obligation.className = "evidence-obligation";
+    obligation.textContent = item.obligation;
+    node.append(obligation);
+  }
+  return node;
 }
 
 function safeUrl(value) {
