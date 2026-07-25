@@ -382,3 +382,12 @@ def test_page_briefs_the_pilot_in_four_terms():
     for term in ("규제 코퍼스", "검색", "사람의 결정", "배포"):
         assert f"<dt>{term}</dt>" in page
     assert "Article 5·6·11·17·28·30" in page
+
+
+def test_page_explains_each_mode_and_the_index_step():
+    page = TestClient(create_app(FixtureService(DATA_DIR))).get("/").text
+    assert 'data-fixture="고정 데이터로 동작 · LLM 호출 없음 · 결과 재현 가능"' in page
+    assert 'data-live="외부 생성·임베딩·재순위 API와 Neo4j에 연결됨"' in page
+    assert 'data-misconfigured="환경변수 여섯 개가 모두 필요합니다"' in page
+    assert "① 규제 데이터 색인" in page
+    assert "조항을 검색 색인에 올립니다." in page

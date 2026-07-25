@@ -87,7 +87,9 @@ async function loadAudit() {
 async function loadHealth() {
   const result = await request("/healthz");
   state.mode = result.mode;
+  const note = $("#mode-note");
   $("#mode-badge").textContent = result.mode.toUpperCase();
+  note.textContent = note.dataset[result.mode] || "";
 }
 
 $("#sample-button").addEventListener("click", () => { $("#query-input").value = "ICT 사고 관리 절차와 증빙은 무엇인가?"; });
