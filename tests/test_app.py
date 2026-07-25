@@ -415,3 +415,14 @@ def test_evaluation_table_caption_disclaims_model_performance():
     assert "제목·요약만 검색" in script
     assert "그래프 필드 확장 검색" in script
 
+
+def test_index_step_copy_is_consistent():
+    page = TestClient(create_app(FixtureService(DATA_DIR))).get('/')
+    script = page.text, TestClient(create_app(FixtureService(DATA_DIR))).get('/static/app.js').text
+    html, js = script
+    assert '색인 후 질문을 제출하면' in html
+    assert '먼저 규제 데이터를 색인하세요.' in html
+    assert '동기화 후 질문을' not in html
+    assert '데이터를 동기화하고 있습니다.' not in js
+    assert '규제 데이터를 색인하고 있습니다.' in js
+

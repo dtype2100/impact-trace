@@ -121,17 +121,17 @@ document.querySelectorAll(".sample-chip").forEach((chip) => {
 controls.sync.addEventListener("click", async () => {
   controls.sync.disabled = true;
   state.phase = "syncing";
-  $("#sync-state").textContent = "동기화 중";
-  setStatus("데이터를 동기화하고 있습니다.");
+  $("#sync-state").textContent = "색인 중";
+  setStatus("규제 데이터를 색인하고 있습니다.");
   try {
     state.syncRun = await request("/api/sync", { method: "POST", body: JSON.stringify({ idempotency_key: "workbench-sync-v1" }) });
-    $("#sync-state").textContent = `동기화 완료 · ${state.syncRun.run_id}`;
+    $("#sync-state").textContent = `색인 완료 · ${state.syncRun.run_id}`;
     controls.analyze.disabled = false;
     state.phase = "ready";
     $("#analysis-status").textContent = "질문을 입력하고 분석하세요.";
-    setStatus("데이터 동기화가 완료되었습니다. 규정 질문을 입력하세요.", "success");
+    setStatus("규제 데이터 색인이 완료되었습니다. 규정 질문을 입력하세요.", "success");
   } catch (error) {
-    $("#sync-state").textContent = "동기화 실패 · 다시 시도하세요.";
+    $("#sync-state").textContent = "색인 실패 · 다시 시도하세요.";
     state.phase = "idle";
     setStatus(error.message, "error");
   } finally { controls.sync.disabled = false; }
