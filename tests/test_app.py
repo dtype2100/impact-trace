@@ -426,3 +426,10 @@ def test_index_step_copy_is_consistent():
     assert "데이터를 동기화하고 있습니다." not in js
     assert "규제 데이터를 색인하고 있습니다." in js
 
+
+def test_sample_chips_announce_their_purpose():
+    page = TestClient(create_app(FixtureService(DATA_DIR))).get('/').text
+    assert 'role="group" aria-label="예시 질문"' in page
+    for label in ('사고 관리 예시 질문 사용', '제3자 리스크 예시 질문 사용', '업무연속성 예시 질문 사용'):
+        assert f'aria-label="{label}"' in page
+

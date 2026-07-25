@@ -104,10 +104,10 @@ async function loadAudit() {
 
 async function loadHealth() {
   const result = await request("/healthz");
-  state.mode = result.mode;
   const note = $("#mode-note");
+  state.mode = result.mode;
   $("#mode-badge").textContent = result.mode.toUpperCase();
-  note.textContent = note.dataset[result.mode] || "";
+  note.textContent = note.getAttribute(`data-${result.mode}`) || "";
 }
 
 document.querySelectorAll(".sample-chip").forEach((chip) => {
