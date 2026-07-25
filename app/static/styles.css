@@ -58,6 +58,12 @@ table { border-collapse: collapse; margin-top: 1rem; width: 100%; }
 caption { caption-side: top; font-weight: 700; padding-bottom: .5rem; text-align: left; }
 th, td { border-bottom: 1px solid var(--rule); padding: .55rem; text-align: left; }
 th { color: var(--slate); font-size: .8rem; }
+.audience { color: var(--slate); font-size: .85rem; margin: .5rem 0 0; }
+.brief { background: var(--surface); border: 1px solid var(--rule); margin-top: 1rem; padding: 1.25rem; }
+.brief h2 { font-size: .95rem; }
+.brief dl { display: grid; gap: .75rem 1.5rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); margin: 0; }
+.brief dt { color: var(--evidence); font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.brief dd { color: var(--slate); font-size: .9rem; margin: .2rem 0 0; }
 
 @media (max-width: 760px) {
   .workbench { padding: 1rem; }

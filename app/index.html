@@ -10,9 +10,10 @@
   <main class="workbench">
     <header class="operations-bar">
       <div>
-        <p class="eyebrow">Regulatory operations</p>
+        <p class="eyebrow">금융 ICT 리스크 · DORA 대응</p>
         <h1>Regulation Impact Trace</h1>
-        <p class="lede">규정 조항에서 조치 결정과 감사 기록까지, 근거를 따라 검토합니다.</p>
+        <p class="lede">EU 금융 규제 DORA 조항을 금융회사의 업무 절차와 증빙 요구사항으로 옮기고, 사람이 승인한 결정만 감사 기록에 남깁니다.</p>
+        <p class="audience">대상: 금융회사 ICT 리스크 · 준법감시 담당자</p>
       </div>
       <section id="sync-control" class="sync-control" aria-labelledby="sync-heading">
         <div>
@@ -23,6 +24,16 @@
         <button id="sync-button" type="button">데이터 동기화</button>
       </section>
     </header>
+
+    <section class="brief" aria-labelledby="brief-heading">
+      <h2 id="brief-heading">이 파일럿이 보여주는 것</h2>
+      <dl>
+        <div><dt>규제 코퍼스</dt><dd>공개 DORA 조항 6건(Article 5·6·11·17·28·30)을 조항 → 의무 → 절차 → 증빙으로 구조화합니다.</dd></div>
+        <div><dt>검색</dt><dd>키워드·벡터·그래프 후보를 RRF로 결합하고 재순위 API로 좁힙니다.</dd></div>
+        <div><dt>사람의 결정</dt><dd>시스템은 조치 초안까지만 만들고, 승인과 반려는 사람이 합니다.</dd></div>
+        <div><dt>배포</dt><dd>자격증명 없이 동작하는 fixture 모드와 폐쇄망 연동용 live 모드를 같은 API로 제공합니다.</dd></div>
+      </dl>
+    </section>
 
     <p id="live-status" class="status" aria-live="polite"></p>
 

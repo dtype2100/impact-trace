@@ -368,3 +368,17 @@ def test_failed_first_sync_marks_failed_then_new_service_retries():
     old=db.runs['retry']['run_id']; assert db.runs['retry']['status']=='failed'
     result=LiveService(live_settings(),mock_client([]),db).sync('retry')
     assert result['run_id'] != old and db.runs['retry']['status']=='success'
+
+
+def test_page_states_finance_positioning():
+    page = TestClient(create_app(FixtureService(DATA_DIR))).get("/").text
+    assert "금융 ICT 리스크 · DORA 대응" in page
+    assert "대상: 금융회사 ICT 리스크 · 준법감시 담당자" in page
+    assert "EU 금융 규제 DORA 조항을" in page
+
+
+def test_page_briefs_the_pilot_in_four_terms():
+    page = TestClient(create_app(FixtureService(DATA_DIR))).get("/").text
+    for term in ("규제 코퍼스", "검색", "사람의 결정", "배포"):
+        assert f"<dt>{term}</dt>" in page
+    assert "Article 5·6·11·17·28·30" in page
