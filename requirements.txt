@@ -1,0 +1,4 @@
+fastapi[standard]>=0.116,<1
+httpx>=0.28,<1
+neo4j>=6,<7
+pytest>=8,<10

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regulation Impact Trace</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body data-mode="fixture">
+  <main class="workbench">
+    <header class="operations-bar">
+      <div>
+        <p class="eyebrow">Regulatory operations</p>
+        <h1>Regulation Impact Trace</h1>
+        <p class="lede">규정 조항에서 조치 결정과 감사 기록까지, 근거를 따라 검토합니다.</p>
+      </div>
+      <section id="sync-control" class="sync-control" aria-labelledby="sync-heading">
+        <div>
+          <p id="sync-heading" class="eyebrow">운영 상태</p>
+          <output id="mode-badge" class="badge">FIXTURE</output>
+          <p id="sync-state" class="muted">동기화 전</p>
+        </div>
+        <button id="sync-button" type="button">데이터 동기화</button>
+      </section>
+    </header>
+
+    <p id="live-status" class="status" aria-live="polite"></p>
+
+    <div class="workspace-grid">
+      <section id="analysis-workspace" class="panel analysis-panel" aria-labelledby="analysis-heading">
+        <p class="step">01 · 질문</p>
+        <h2 id="analysis-heading">규정 영향 분석</h2>
+        <p class="muted">동기화 후 질문을 제출하면 근거와 검토 초안을 만듭니다.</p>
+        <button id="sample-button" class="secondary" type="button">사고 관리 예시 사용</button>
+        <form id="analysis-form">
+          <label for="query-input">규정 질문</label>
+          <textarea id="query-input" name="query" minlength="3" required placeholder="ICT 사고 관리 절차와 증빙은 무엇인가?"></textarea>
+          <button id="analyze-button" type="submit" disabled>영향 분석</button>
+        </form>
+        <p id="analysis-status" class="muted">먼저 데이터를 동기화하세요.</p>
+      </section>
+
+      <section id="evidence-trace" class="panel trace-panel" aria-labelledby="trace-heading">
+        <p class="step">02 · 근거 추적</p>
+        <h2 id="trace-heading">Clause → Obligation → Process → Evidence</h2>
+        <p id="answer" class="answer muted">질문을 제출하면 근거 기반 요약을 표시합니다.</p>
+        <ol id="trace-path" class="trace-path" aria-label="근거 경로"></ol>
+        <h3>공식 출처</h3>
+        <ul id="sources" class="sources"><li class="muted">분석 결과의 출처가 여기에 표시됩니다.</li></ul>
+      </section>
+    </div>
+
+    <div class="review-grid">
+      <section id="review-panel" class="panel" aria-labelledby="review-heading">
+        <p class="step">03 · 조치 검토</p>
+        <h2 id="review-heading">조치 초안 승인 또는 반려</h2>
+        <p id="draft" class="draft muted">분석 후 검토 가능한 초안이 표시됩니다.</p>
+        <label for="reason-input">결정 사유</label>
+        <textarea id="reason-input" maxlength="500" placeholder="반려할 때는 사유를 입력하세요."></textarea>
+        <div class="button-row">
+          <button id="approve-button" type="button" disabled>승인</button>
+          <button id="reject-button" class="danger" type="button" disabled>반려</button>
+        </div>
+      </section>
+
+      <section id="audit-panel" class="panel" aria-labelledby="audit-heading">
+        <p class="step">04 · 감사와 평가</p>
+        <div class="panel-heading">
+          <h2 id="audit-heading">최근 감사 기록</h2>
+          <button id="evaluation-button" class="secondary" type="button">평가 실행</button>
+        </div>
+        <ol id="audit-events" class="audit-events"><li class="muted">감사 기록을 불러오는 중입니다.</li></ol>
+        <table>
+          <caption>검색 평가 비교</caption>
+          <thead><tr><th scope="col">방법</th><th scope="col">Recall@5</th><th scope="col">MRR</th></tr></thead>
+          <tbody id="metrics"><tr><td colspan="3" class="muted">평가를 실행하면 지표를 표시합니다.</td></tr></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

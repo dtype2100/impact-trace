@@ -1,0 +1,8 @@
+[
+  {"query":"ICT 위험관리 체계의 책임은 누구에게 있는가?","relevant_clause_ids":["DORA-ART-5","DORA-ART-6"]},
+  {"query":"문서화된 ICT 위험관리 체계는 무엇을 요구하는가?","relevant_clause_ids":["DORA-ART-6"]},
+  {"query":"백업과 복구 절차에 필요한 증빙은 무엇인가?","relevant_clause_ids":["DORA-ART-11"]},
+  {"query":"ICT 사고를 탐지하고 관리하는 절차는?","relevant_clause_ids":["DORA-ART-17"]},
+  {"query":"제3자 ICT 위험을 어떻게 관리해야 하는가?","relevant_clause_ids":["DORA-ART-28"]},
+  {"query":"ICT 공급자 계약에 포함할 사항은?","relevant_clause_ids":["DORA-ART-30"]}
+]
