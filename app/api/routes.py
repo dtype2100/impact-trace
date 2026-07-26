@@ -13,7 +13,7 @@ router = APIRouter()
 def _service(request: Request): return request.app.state.service
 
 
-@router.get("/healthz")
+@router.get("/api/health")
 def health(request: Request): return {"mode": _service(request).mode, "status": "degraded" if _service(request).mode == "misconfigured" else "ok"}
 @router.post("/api/sync")
 def sync(request: Request, body: SyncRequest): return _service(request).sync(body.idempotency_key)

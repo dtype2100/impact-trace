@@ -27,7 +27,7 @@
 
 ## 아키텍처
 
-- **FastAPI**: `/healthz`, `/api/sync`, `/api/analyze`, `/api/reviews`, `/api/audit`, `/api/evaluation/run` 등 REST API와 정적 UI(`/`)를 제공한다.
+- **FastAPI**: `/api/health`, `/api/sync`, `/api/analyze`, `/api/reviews`, `/api/audit`, `/api/evaluation/run` 등 REST API와 정적 UI(`/`)를 제공한다.
 - **Neo4j Aura**: 조항·의무·근거를 그래프로 저장하고 full-text·vector 후보를 함께 조회한다.
 - **생성(generation) API**: OpenAI 호환 chat completions 엔드포인트로 근거 기반 조치 초안을 생성한다.
 - **임베딩(embedding) API**: OpenAI 호환 embeddings 엔드포인트로 질의 임베딩을 생성한다.
@@ -58,7 +58,7 @@ uvicorn app.main:app --reload
 헬스체크:
 
 ```bash
-curl http://127.0.0.1:8000/healthz
+curl http://127.0.0.1:8000/api/health
 ```
 
 Fixture 모드에서는 `{"mode":"fixture","status":"ok"}`가 반환된다.
@@ -115,7 +115,7 @@ NEO4J_DATABASE=neo4j
 
 | 메서드 | 경로 | 설명 |
 | --- | --- | --- |
-| GET | `/healthz` | 현재 모드와 상태를 반환한다 |
+| GET | `/api/health` | 현재 모드와 상태를 반환한다 |
 | POST | `/api/sync` | 규제 데이터를 색인에 동기화한다 |
 | POST | `/api/analyze` | 질의에 대한 근거와 조치 초안을 생성한다 |
 | POST | `/api/reviews` | 조치 초안을 승인/반려한다 |
@@ -147,7 +147,7 @@ curl -X POST localhost:8000/api/evaluation/run
 
 | 상태 코드 | 의미 | 발생 조건 |
 | --- | --- | --- |
-| `200` | 성공 | 정상 처리. `misconfigured` 상태의 `/healthz`도 `mode=misconfigured`, `status=degraded`로 `200`을 반환한다 |
+| `200` | 성공 | 정상 처리. `misconfigured` 상태의 `/api/health`도 `mode=misconfigured`, `status=degraded`로 `200`을 반환한다 |
 | `404` | Not Found | 존재하지 않는 리소스(예: 잘못된 `draft_id`) |
 | `409` | Conflict | 모든 모드에서 이미 결정된(`approved`/`rejected`) 초안을 다시 검토 요청한 경우, live 모드에서는 같은 idempotency 키가 진행 중이거나 다른 요청이 이미 복구를 시도 중인 경우도 포함(실패한 동기화 자체는 재시도 가능하며 `409`가 아니다) |
 | `422` | Unprocessable Entity | 필수 필드 누락/형식 오류, 질의 길이 제한 위반, `decision`이 `approved`/`rejected`가 아닌 경우 |

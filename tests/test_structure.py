@@ -67,7 +67,7 @@ def test_main_is_the_composition_root_over_the_api_router():
     from app.main import app, create_app
 
     assert app and create_app
-    assert {"/healthz", "/api/sync", "/api/analyze", "/api/reviews", "/api/audit", "/api/evaluation/run", "/"} <= {
+    assert {"/api/health", "/api/sync", "/api/analyze", "/api/reviews", "/api/audit", "/api/evaluation/run", "/"} <= {
         route.path for route in router.routes
     }
 

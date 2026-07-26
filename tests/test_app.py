@@ -94,7 +94,7 @@ def test_evaluation_computes_metrics_without_prefilled_scores():
 
 def test_health_and_fixture_api_flow():
     client = TestClient(create_app(FixtureService(DATA_DIR)))
-    assert client.get("/healthz").json()["mode"] == "fixture"
+    assert client.get("/api/health").json()["mode"] == "fixture"
     assert client.post("/api/sync", json={"idempotency_key": "demo-v1"}).status_code == 200
     analysis = client.post("/api/analyze", json={"query": "ICT 사고 관리 절차는?"})
     body = analysis.json()
@@ -254,7 +254,7 @@ def test_rrf_keeps_disjoint_rankings_and_unrelated_fixture_has_no_draft():
 def test_invalid_dimension_and_misconfigured_health_are_safe():
     settings = Settings.from_env({**LIVE_ENV, "EMBEDDING_DIMENSION": "bad"})
     assert settings.mode == "misconfigured"
-    assert TestClient(create_app(build_service(settings))).get("/healthz").json()["status"] == "degraded"
+    assert TestClient(create_app(build_service(settings))).get("/api/health").json()["status"] == "degraded"
 
 
 def test_html_does_not_use_innerhtml_for_api_content():
@@ -432,4 +432,10 @@ def test_sample_chips_announce_their_purpose():
     assert 'role="group" aria-label="예시 질문"' in page
     for label in ('사고 관리 예시 질문 사용', '제3자 리스크 예시 질문 사용', '업무연속성 예시 질문 사용'):
         assert f'aria-label="{label}"' in page
+
+
+def test_routes_avoid_cloud_run_reserved_paths():
+    paths = {route.path for route in create_app(FixtureService(DATA_DIR)).routes}
+    assert not [p for p in paths if p.endswith('z')]
+    assert not [p for p in paths if p == '/eventlog' or p.startswith('/_ah/')]
 

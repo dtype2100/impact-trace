@@ -103,11 +103,17 @@ async function loadAudit() {
 }
 
 async function loadHealth() {
-  const result = await request("/healthz");
   const note = $("#mode-note");
-  state.mode = result.mode;
-  $("#mode-badge").textContent = result.mode.toUpperCase();
-  note.textContent = note.getAttribute(`data-${result.mode}`) || "";
+  try {
+    const result = await request("/api/health");
+    state.mode = result.mode;
+    $("#mode-badge").textContent = result.mode.toUpperCase();
+    note.textContent = note.getAttribute(`data-${result.mode}`) || "";
+  } catch (error) {
+    state.mode = "unknown";
+    $("#mode-badge").textContent = "UNKNOWN";
+    note.textContent = "상태 확인 실패";
+  }
 }
 
 document.querySelectorAll(".sample-chip").forEach((chip) => {

@@ -29,7 +29,7 @@ The demo proceeds in this order: **sync → analyze → review → audit → eva
 
 ## Architecture
 
-- **FastAPI**: serves the REST API (`/healthz`, `/api/sync`, `/api/analyze`, `/api/reviews`, `/api/audit`, `/api/evaluation/run`) and the static UI (`/`).
+- **FastAPI**: serves the REST API (`/api/health`, `/api/sync`, `/api/analyze`, `/api/reviews`, `/api/audit`, `/api/evaluation/run`) and the static UI (`/`).
 - **Neo4j Aura**: stores articles, obligations, and evidence as a graph, and serves combined full-text and vector candidates.
 - **Generation API**: an OpenAI-compatible chat-completions endpoint that produces grounded action drafts.
 - **Embedding API**: an OpenAI-compatible embeddings endpoint that produces query embeddings.
@@ -60,7 +60,7 @@ Open `http://127.0.0.1:8000` in a browser and click through **Sync data → Anal
 Health check:
 
 ```bash
-curl http://127.0.0.1:8000/healthz
+curl http://127.0.0.1:8000/api/health
 ```
 
 In fixture mode this returns `{"mode":"fixture","status":"ok"}`.
@@ -117,7 +117,7 @@ Start the server and open `http://127.0.0.1:8000`, then walk through the same **
 
 | Method | Path | Description |
 | --- | --- | --- |
-| GET | `/healthz` | Returns the current mode and status |
+| GET | `/api/health` | Returns the current mode and status |
 | POST | `/api/sync` | Synchronizes regulatory data into the index |
 | POST | `/api/analyze` | Generates cited evidence and an action draft for a query |
 | POST | `/api/reviews` | Approves or rejects an action draft |
@@ -149,7 +149,7 @@ curl -X POST localhost:8000/api/evaluation/run
 
 | Status | Meaning | When it occurs |
 | --- | --- | --- |
-| `200` | Success | Normal processing. In `misconfigured` state, `/healthz` also returns `200` with `mode=misconfigured` and `status=degraded` |
+| `200` | Success | Normal processing. In `misconfigured` state, `/api/health` also returns `200` with `mode=misconfigured` and `status=degraded` |
 | `404` | Not Found | Resource does not exist (e.g. an invalid `draft_id`) |
 | `409` | Conflict | In every mode, retrying a review on a draft that is already `approved`/`rejected`; in live mode, also a sync request whose idempotency key is already in flight or already being reclaimed by another recovery attempt (a failed sync run itself is retryable and does not return `409`) |
 | `422` | Unprocessable Entity | Missing/invalid fields, a query outside the allowed length, or a `decision` other than `approved`/`rejected` |
