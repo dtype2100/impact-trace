@@ -196,7 +196,7 @@ Use `fastapi.testclient.TestClient` and an injected `FixtureService`. Assert:
 ```python
 def test_health_and_fixture_api_flow():
     client = TestClient(create_app(FixtureService(DATA_DIR)))
-    assert client.get("/healthz").json()["mode"] == "fixture"
+    assert client.get("/api/health").json()["mode"] == "fixture"
 
     sync = client.post("/api/sync", json={"idempotency_key": "demo-v1"})
     assert sync.status_code == 200
@@ -469,7 +469,7 @@ Expected: all tests pass, with zero network calls.
 
 ```bash
 uvicorn app.main:app --host 127.0.0.1 --port 8000
-curl -fsS http://127.0.0.1:8000/healthz
+curl -fsS http://127.0.0.1:8000/api/health
 curl -fsS -X POST http://127.0.0.1:8000/api/sync \
   -H 'content-type: application/json' \
   -d '{"idempotency_key":"demo-v1"}'

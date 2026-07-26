@@ -59,14 +59,14 @@ NEO4J_DATABASE=neo4j
 
 - 0/6 필수 값 설정: `fixture`
 - 6/6 필수 값 설정: `live`
-- 1~5/6 필수 값 설정: `misconfigured`; `/healthz` 외 기능 API는 503
+- 1~5/6 필수 값 설정: `misconfigured`; `/api/health` 외 기능 API는 503
 
 비밀값은 응답·로그·이미지·Git 대상 파일에 포함하지 않는다.
 
 ## API Contract
 
 ```text
-GET  /healthz
+GET  /api/health
 POST /api/sync                 {"idempotency_key": "demo-v1"}
 POST /api/analyze              {"query": "..."}
 POST /api/reviews              {"draft_id": "...", "decision": "approved|rejected", "reason": "..."}
@@ -142,7 +142,7 @@ Browser
 ```bash
 python -m pytest -q
 uvicorn app.main:app --host 127.0.0.1 --port 8000
-curl -fsS http://127.0.0.1:8000/healthz
+curl -fsS http://127.0.0.1:8000/api/health
 docker build -t regulation-impact-trace .
 ```
 
